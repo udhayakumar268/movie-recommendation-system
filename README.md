@@ -3,24 +3,34 @@
 
 An end-to-end machine learning project that recommends movies based on user preferences using **TensorFlow Collaborative Filtering and Matrix Factorization**.
 
-CineMatch features a Netflix-inspired Streamlit interface that allows users to explore personalized movie recommendations, browse movie cards, and view predicted ratings.
+CineMatch features a Netflix-inspired Streamlit interface where users can explore personalized movie recommendations, view predicted ratings, and discover movies they have not watched.
+
+## 🌐 Live Demo
+
+🎬 **[Launch CineMatch — Live App](https://movie-recommendation-system-cinematch-ml.streamlit.app/)**
+
+💻 **[View GitHub Repository](https://github.com/udhayakumar268/movie-recommendation-system)**
+
+Explore personalized movie recommendations for existing MovieLens users through an interactive Streamlit application.
 
 ## 📌 Project Overview
 
 CineMatch predicts how much a user might enjoy movies they have not rated by learning patterns from historical user-movie interactions.
 
-The recommendation engine uses **collaborative filtering with matrix factorization** to learn latent features representing movies and user preferences.
+The recommendation engine uses collaborative filtering with matrix factorization to learn latent features representing movies and user preferences.
 
-The project covers the complete machine learning workflow:
+### Machine Learning Workflow
 
-- Data loading and preprocessing
-- Train, validation, and test splitting
-- Collaborative filtering model development
-- Hyperparameter tuning
-- Model training and evaluation
-- Personalized recommendation generation
-- Saving model predictions
-- Interactive Streamlit application
+1. Data loading and preprocessing
+2. Train, validation, and test splitting
+3. User-movie rating matrix creation
+4. Collaborative filtering model development
+5. Hyperparameter tuning
+6. Final model training
+7. Model evaluation and baseline comparison
+8. Personalized recommendation generation
+9. Saving predictions for deployment
+10. Interactive Streamlit application
 
 ## 📊 Dataset
 
@@ -34,11 +44,9 @@ The project covers the complete machine learning workflow:
 | Rating Scale | 1–5 |
 | Dataset Source | GroupLens Research |
 
-Dataset: https://grouplens.org/datasets/movielens/100k/
+**Dataset:** https://grouplens.org/datasets/movielens/100k/
 
 ### Dataset Splitting
-
-The dataset was divided into:
 
 | Dataset | Ratings | Percentage |
 |---|---:|---:|
@@ -72,9 +80,10 @@ The remaining 20,000 ratings were reserved for final testing.
 - HTML
 - CSS
 
-**Version Control**
+**Version Control and Deployment**
 - Git
 - GitHub
+- Streamlit Community Cloud
 
 ## 🧠 Machine Learning Approach
 
@@ -82,31 +91,25 @@ The remaining 20,000 ratings were reserved for final testing.
 
 Collaborative filtering predicts user preferences by learning patterns from historical ratings across multiple users and movies.
 
-CineMatch uses matrix factorization to represent each movie and user through latent features.
+CineMatch uses matrix factorization to represent movies and users through latent features.
 
 ### Prediction Formula
 
 The predicted rating is calculated using:
 
-```text
-Predicted Rating = Movie Features · User Preferences + User Bias
-```
-
-Mathematically:
-
-```text
-r̂(i,j) = x(i)ᵀ w(j) + b(j)
-```
+$$
+\hat{r}_{ij} = x_i^T w_j + b_j
+$$
 
 Where:
 
-- `x(i)` represents the latent features of movie i.
-- `w(j)` represents the latent preferences of user j.
-- `b(j)` represents the bias of user j.
+- \(x_i\) represents the latent features of movie \(i\).
+- \(w_j\) represents the latent preferences of user \(j\).
+- \(b_j\) represents the bias of user \(j\).
 
 ### Cost Function
 
-The model minimizes squared prediction error over observed ratings, with L2 regularization applied to movie and user latent factors.
+The model minimizes squared prediction error over observed ratings while applying L2 regularization to movie and user latent factors.
 
 A binary rating mask ensures that missing ratings are excluded from the training error.
 
@@ -124,7 +127,7 @@ A binary rating mask ensures that missing ratings are excluded from the training
 
 The regularization parameter was selected using validation RMSE.
 
-The final model was then retrained using the combined training and validation datasets.
+The final model was retrained using the combined training and validation datasets.
 
 ## 📈 Model Performance
 
@@ -132,34 +135,35 @@ The final TensorFlow collaborative filtering model was evaluated on the held-out
 
 | Metric | TensorFlow Model | Global Mean Baseline |
 |---|---:|---:|
-| Mean Absolute Error (MAE) | 0.8788 | 0.9420 |
-| Root Mean Squared Error (RMSE) | 1.1151 | 1.1239 |
+| Mean Absolute Error (MAE) | **0.8788** | 0.9420 |
+| Root Mean Squared Error (RMSE) | **1.1151** | 1.1239 |
 
 ### Key Findings
 
-- The collaborative filtering model achieved a test MAE of **0.8788**.
-- The model achieved a test RMSE of **1.1151**.
-- Regularization strength **λ = 10** produced the lowest validation RMSE among the tested values.
-- The model outperformed the global mean baseline on both evaluation metrics.
+- Achieved a test MAE of **0.8788**.
+- Achieved a test RMSE of **1.1151**.
+- Selected **λ = 10** based on validation RMSE.
+- Outperformed the global mean baseline on both evaluation metrics.
+- Used 80,000 ratings to train the final model.
 
 Predicted ratings are clipped to the valid 1–5 rating scale during evaluation and when displayed in the application.
 
 ## 🎯 Personalized Recommendation System
 
-The recommendation engine:
+The recommendation engine follows these steps:
 
-1. Selects an existing MovieLens user.
-2. Retrieves predicted ratings for all movies.
-3. Identifies movies already rated by that user.
-4. Removes previously rated movies from the recommendation candidates.
-5. Ranks unseen movies by predicted rating.
-6. Returns the highest-scoring movies with their titles.
+1. Select an existing MovieLens user.
+2. Retrieve predicted ratings for all movies.
+3. Identify movies already rated by the selected user.
+4. Remove previously rated movies from the recommendation candidates.
+5. Rank unseen movies by their predicted scores.
+6. Return the highest-scoring movies with their titles and predicted ratings.
 
-The application allows users to select different profiles and customize the number of recommendations displayed.
+The application allows users to switch between profiles and customize the number of recommendations displayed.
 
 ## 🎨 Streamlit Application
 
-CineMatch includes a Netflix-inspired interface with a dark cinematic theme.
+CineMatch provides a Netflix-inspired interface with a dark cinematic theme.
 
 ### Application Features
 
@@ -172,9 +176,11 @@ CineMatch includes a Netflix-inspired interface with a dark cinematic theme.
 - Movie release years
 - Previously highly rated movies
 - Model performance metrics
-- Interactive recommendation count selection
+- Adjustable recommendation count
 
-The Streamlit application loads the saved prediction matrix directly, allowing recommendations without retraining the TensorFlow model.
+The application loads the saved prediction matrix directly, allowing recommendations without retraining the TensorFlow model.
+
+**Live Application:** https://movie-recommendation-system-cinematch-ml.streamlit.app/
 
 ## 📁 Project Structure
 
@@ -211,11 +217,9 @@ movie-recommendation-system/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/movie-recommendation-system.git
+git clone https://github.com/udhayakumar268/movie-recommendation-system.git
 cd movie-recommendation-system
 ```
-
-Replace `YOUR_USERNAME` with your GitHub username.
 
 ### 2. Create a Virtual Environment
 
@@ -241,7 +245,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Streamlit will display a local URL where you can access the application.
+Streamlit will display a local URL where you can access CineMatch.
 
 ### 5. Retrain the Model (Optional)
 
@@ -251,13 +255,13 @@ To reproduce the training workflow:
 python recommendation.py
 ```
 
-The script will:
+The training script will:
 
 - Load MovieLens ratings
 - Tune the regularization parameter
 - Train the final TensorFlow model
 - Evaluate model performance
-- Generate sample recommendations
+- Generate personalized recommendations
 - Save predictions to `models/predicted_ratings.pkl`
 
 Running this command will overwrite the existing saved prediction matrix.
@@ -266,9 +270,9 @@ Running this command will overwrite the existing saved prediction matrix.
 
 - The model supports existing MovieLens users rather than entirely new user profiles.
 - Recommendations depend on historical rating patterns.
-- The model does not use movie descriptions, genres, or other content features.
+- The model does not currently use movie descriptions, genres, or other content features.
 - Predicted ratings may exceed the 1–5 range before clipping.
-- The current application uses styled movie cards rather than real movie posters.
+- The current application uses styled movie cards instead of real movie posters.
 - Ranking-specific metrics such as Precision@K and Recall@K have not yet been evaluated.
 
 ## 🔮 Future Improvements
